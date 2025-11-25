@@ -1,38 +1,9 @@
-{
-  "log": {
-    "loglevel": "warning"
-  },
-  "inbounds": [
-    {
-      "port": 8080,
-      "protocol": "trojan",
-      "settings": {
-        "clients": [
-          {
-            "password": "ZOROZORO",
-            "level": 0
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "/tg-@ZORO40_DZ"
-        }
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {
-        "domainStrategy": "UseIPv4"
-      },
-      "streamSettings": {
-        "sockopt": {
-          "tcpFastOpen": true
-        }
-      }
-    }
-  ]
-}
+FROM teddysun/v2ray:latest
+
+# نسخ ملف الكونفيغ داخل المسار الصحيح
+COPY config.json /etc/v2ray/config.json
+
+# تشغيل V2Ray داخل Cloud Run
+EXPOSE 8080
+
+CMD ["v2ray", "run", "-config", "/etc/v2ray/config.json"]
